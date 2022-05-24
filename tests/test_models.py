@@ -50,7 +50,7 @@ def test_daily_min_string():
 @pytest.mark.parametrize(
     "test, expected, raises",
     [
-        ... # other test cases here, with None for raises
+        # other test cases here, with None for raises
         (
             [[-1, 2, 3], [4, 5, 6], [7, 8, 9]],
             [[0, 0.67, 1], [0.67, 0.83, 1], [0.78, 0.89, 1]],
