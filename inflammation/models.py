@@ -14,22 +14,35 @@ def load_csv(filename):
     """Load a Numpy array from a CSV
 
     :param filename: Filename of CSV to load
+    :returns: Numpy array of data from CSV
     """
     return np.loadtxt(fname=filename, delimiter=',')
 
 
 def daily_mean(data):
-    """Calculate the daily mean of a 2D inflammation data array."""
+    """Calculate the daily mean of a 2D inflammation data array.
+    
+    :param: numpy input data
+    :return: mean of data in the column
+    """
     return np.mean(data, axis=0)
 
 
 def daily_max(data):
-    """Calculate the daily max of a 2D inflammation data array."""
+    """Calculate the daily max of a 2D inflammation data array.
+    
+    :param: numpy input data
+    :return: max value of the column
+    """
     return np.max(data, axis=0)
 
 
 def daily_min(data):
-    """Calculate the daily min of a 2D inflammation data array."""
+    """Calculate the daily min of a 2D inflammation data array.
+    
+    :param: numpy input data
+    :return: minimum value of the column 
+    """
     return np.min(data, axis=0)
 
 
@@ -40,6 +53,10 @@ def patient_normalise(data):
     NaN values are ignored, and normalised to 0.
 
     Negative values are rounded to 0.
+    
+    :param: numpy input data
+    :raises ValueError: raised if any of data is less than zero
+    :return: Normalised columns with respect to the maximum value in columns 
     """
     if np.any(data<0):
         raise ValueError('Inflammation values should not be negative')
