@@ -8,12 +8,19 @@ class Observation:
     def __str__(self):
         return self.value
 
+    def __eq__(self,other):
+        if self.day == other.day and self.value == other.value:
+            return True
+        else:
+            return False
+
 class Person:
     def __init__(self, name):
         self.name = name
 
     def __str__(self):
         return self.name
+
 
 class Patient(Person):
     """A patient in an inflammation study."""
@@ -38,3 +45,9 @@ class Patient(Person):
 
         self.observations.append(new_observation)
         return new_observation
+
+    def __eq__(self, other):
+        if self.name == other.name and self.observations == other.observations:
+            return True
+        else:
+            return False

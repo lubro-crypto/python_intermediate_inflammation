@@ -1,5 +1,6 @@
 # file: tests/test_serializers.py
 
+from cgi import test
 from inflammation import models, serializers
 
 
@@ -18,11 +19,10 @@ def test_patients_json_serializer():
 
     # Check that we've got the same data back
     for patient_new, patient in zip(patients_new, patients):
-        assert patient_new.name == patient.name
+        assert patient_new == patient
 
         for obs_new, obs in zip(patient_new.observations, patient.observations):
-            assert obs_new.day == obs.day
-            assert obs_new.value == obs.value
+            assert obs_new == obs
 
-if __name__ == '__main_-'
-test_patients_json_serializer
+
+
