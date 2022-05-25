@@ -1,5 +1,6 @@
 """Tests for statistics functions within the Model layer."""
 
+from typing_extensions import assert_type
 import numpy as np
 import numpy.testing as npt
 import pytest
@@ -50,6 +51,11 @@ def test_daily_min_string():
 @pytest.mark.parametrize(
     "test, expected, raises",
     [
+        (
+            'hello',
+            None,
+            TypeError
+        ),
         # other test cases here, with None for raises
         (
             [[-1, 2, 3], [4, 5, 6], [7, 8, 9]],
@@ -65,9 +71,11 @@ def test_daily_min_string():
 def test_patient_normalise(test, expected, raises):
     """Test normalisation works for arrays of one and positive integers."""
     from inflammation.models import patient_normalise
+    from numpy.testing import assert_raises
     if raises:
         with pytest.raises(raises):
             npt.assert_almost_equal(patient_normalise(np.array(test)), np.array(expected), decimal=2)
     else:
+        npt.assert_
         npt.assert_almost_equal(patient_normalise(np.array(test)), np.array(expected), decimal=2)
 
