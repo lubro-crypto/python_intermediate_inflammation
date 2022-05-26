@@ -2,9 +2,10 @@
 
 import json
 import inflammation.models as models
+from abc import ABC
+import csv
 
-
-class Serializer:
+class Serializer(ABC):
     @classmethod
     def serialize(cls, instances):
         raise NotImplementedError
@@ -64,6 +65,29 @@ class PatientJSONSerializer(PatientSerializer):
         for i in data:
             print(i)
             print('new ')
+
+class PatientCSVSerializer(PatientSerializer):
+    @classmethod
+    def save(cls, instances, path):
+        with open(path,'w', newline='') as csvfile:
+
+            for i in cls.serialize(instances):
+                # foreach patient
+                csvfile.write("%s,%s,%s"%('name',i['name'],'observations'))
+                
+                for j in i['observations']:
+                    # for each observation
+                    csvfile.write(",%s,%s,%s,%s"%('day',j['day'],'value',j['value']))
+                csvfile.write("\n")
+                
+
+    @classmethod 
+    def load(cls,path):
+        with open(path, newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            data = []
+            for row in reader:
+                data.append({'date': row['date'], 'value': row['value']})
 
 
 class ObservationSerializer(Serializer):

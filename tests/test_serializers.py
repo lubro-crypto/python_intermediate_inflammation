@@ -25,4 +25,22 @@ def test_patients_json_serializer():
             assert obs_new == obs
 
 
+def test_patients_csv_serializer():
+    # Create some test data
+    patients = [
+        models.Patient('Alice', [models.Observation(i, i + 1) for i in range(3)]),
+        models.Patient('Bob', [models.Observation(i, 2 * i) for i in range(3)]),
+    ]
+
+    # Save and reload the data
+    output_file = 'patients.csv'
+    serializers.PatientCSVSerializer.save(patients, output_file)
+    patients_new = serializers.PatientCSVSerializer.load(output_file)
+
+    # Check that we've got the same data back
+    for patient_new, patient in zip(patients_new, patients):
+        assert patient_new == patient
+
+        for obs_new, obs in zip(patient_new.observations, patient.observations):
+            assert obs_new == obs
 
