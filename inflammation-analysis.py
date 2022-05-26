@@ -26,7 +26,23 @@ def main(args):
             'min': models.daily_min(inflammation_data)
         }
 
-        views.visualize(view_data)
+        ### MODIFIED START ###
+        if args.view == 'visualize':
+            view_data = {
+                'average': models.daily_mean(inflammation_data),
+                'max': models.daily_max(inflammation_data),
+                'min': models.daily_min(inflammation_data),
+            }
+
+            views.visualize(view_data)
+
+        elif args.view == 'record':
+            patient_data = inflammation_data[args.patient]
+            observations = [models.Observation(day, value) for day, value in enumerate(patient_data)]
+            patient = models.Patient('UNKNOWN', observations)
+
+            views.display_patient_record(patient)
+        ### MODIFIED END ###
 
 
 if __name__ == "__main__":
@@ -37,6 +53,22 @@ if __name__ == "__main__":
         'infiles',
         nargs='+',
         help='Input CSV(s) containing inflammation series for each patient')
+
+    
+    ### MODIFIED START ###
+    parser.add_argument(
+        '--view',
+        default='visualize',
+        choices=['visualize', 'record'],
+        help='Which view should be used?')
+
+    parser.add_argument(
+        '--patient',
+        type=int,
+        default=0,
+        help='Which patient should be displayed?')
+    ### MODIFIED END ###
+
 
     args = parser.parse_args()
 

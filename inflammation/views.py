@@ -24,8 +24,6 @@ def visualize(data_dict):
 
     plt.show()
 
-# file: inflammation/views.py
-
 
 def display_patient_record(patient):
     """Display data for a single patient."""
